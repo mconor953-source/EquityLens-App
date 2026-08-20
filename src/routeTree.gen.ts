@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as InvestmentIdeasRouteImport } from './routes/investment-ideas'
+import { Route as MarketResearchRouteImport } from './routes/market-research'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as WatchlistsRouteImport } from './routes/watchlists'
 
@@ -22,6 +23,11 @@ const IndexRoute = IndexRouteImport.update({
 const InvestmentIdeasRoute = InvestmentIdeasRouteImport.update({
   id: '/investment-ideas',
   path: '/investment-ideas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MarketResearchRoute = MarketResearchRouteImport.update({
+  id: '/market-research',
+  path: '/market-research',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SettingsRoute = SettingsRouteImport.update({
@@ -38,12 +44,14 @@ const WatchlistsRoute = WatchlistsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/investment-ideas': typeof InvestmentIdeasRoute
+  '/market-research': typeof MarketResearchRoute
   '/settings': typeof SettingsRoute
   '/watchlists': typeof WatchlistsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/investment-ideas': typeof InvestmentIdeasRoute
+  '/market-research': typeof MarketResearchRoute
   '/settings': typeof SettingsRoute
   '/watchlists': typeof WatchlistsRoute
 }
@@ -51,20 +59,30 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/investment-ideas': typeof InvestmentIdeasRoute
+  '/market-research': typeof MarketResearchRoute
   '/settings': typeof SettingsRoute
   '/watchlists': typeof WatchlistsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/investment-ideas' | '/settings' | '/watchlists'
+  fullPaths:
+    '/' | '/investment-ideas' | '/market-research' | '/settings' | '/watchlists'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/investment-ideas' | '/settings' | '/watchlists'
-  id: '__root__' | '/' | '/investment-ideas' | '/settings' | '/watchlists'
+  to:
+    '/' | '/investment-ideas' | '/market-research' | '/settings' | '/watchlists'
+  id:
+    | '__root__'
+    | '/'
+    | '/investment-ideas'
+    | '/market-research'
+    | '/settings'
+    | '/watchlists'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   InvestmentIdeasRoute: typeof InvestmentIdeasRoute
+  MarketResearchRoute: typeof MarketResearchRoute
   SettingsRoute: typeof SettingsRoute
   WatchlistsRoute: typeof WatchlistsRoute
 }
@@ -83,6 +101,13 @@ declare module '@tanstack/react-router' {
       path: '/investment-ideas'
       fullPath: '/investment-ideas'
       preLoaderRoute: typeof InvestmentIdeasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/market-research': {
+      id: '/market-research'
+      path: '/market-research'
+      fullPath: '/market-research'
+      preLoaderRoute: typeof MarketResearchRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/settings': {
@@ -105,6 +130,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   InvestmentIdeasRoute: InvestmentIdeasRoute,
+  MarketResearchRoute: MarketResearchRoute,
   SettingsRoute: SettingsRoute,
   WatchlistsRoute: WatchlistsRoute,
 }
