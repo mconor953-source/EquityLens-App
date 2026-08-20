@@ -11,6 +11,7 @@ import type {
   NewsItem,
   QuoteRow,
   TechnicalAnalysis,
+  StructurePoint,
   WatchlistRow,
 } from "./types";
 
@@ -231,7 +232,7 @@ export const searchUniverse: Asset[] = [
   },
 ];
 
-export const researchAsset = searchUniverse[0];
+export const researchAsset = searchUniverse[0]!;
 
 export const priceHistory = {
   "1M": mockCandles({ seed: 7, count: 22, start: 292, end: 316.83, startDate: "2026-07-21" }),
@@ -317,6 +318,16 @@ const structureCandles = mockCandles({
   startDate: "2026-06-01",
 });
 
+function swing(
+  i: number,
+  side: "h" | "l",
+  kind: StructurePoint["kind"],
+  major: boolean,
+): StructurePoint {
+  const c = structureCandles[i]!;
+  return { t: c.t, price: side === "h" ? c.h : c.l, kind, major };
+}
+
 export const marketStructure: MarketStructure = {
   status: "Watching Seller Level",
   timeframes: [
@@ -345,11 +356,11 @@ export const marketStructure: MarketStructure = {
   eventRisk: "No major high-impact events scheduled this week for this asset.",
   candles: structureCandles,
   points: [
-    { t: structureCandles[18].t, price: structureCandles[18].h, kind: "HH", major: false },
-    { t: structureCandles[34].t, price: structureCandles[34].l, kind: "HL", major: false },
-    { t: structureCandles[58].t, price: structureCandles[58].h, kind: "HH", major: true },
-    { t: structureCandles[70].t, price: structureCandles[70].l, kind: "HL", major: true },
-    { t: structureCandles[82].t, price: structureCandles[82].h, kind: "LH", major: true },
+    swing(18, "h", "HH", false),
+    swing(34, "l", "HL", false),
+    swing(58, "h", "HH", true),
+    swing(70, "l", "HL", true),
+    swing(82, "h", "LH", true),
   ],
 };
 
