@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as InvestmentIdeasRouteImport } from './routes/investment-ideas'
+import { Route as WatchlistsRouteImport } from './routes/watchlists'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +23,40 @@ const InvestmentIdeasRoute = InvestmentIdeasRouteImport.update({
   path: '/investment-ideas',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WatchlistsRoute = WatchlistsRouteImport.update({
+  id: '/watchlists',
+  path: '/watchlists',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/investment-ideas': typeof InvestmentIdeasRoute
+  '/watchlists': typeof WatchlistsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/investment-ideas': typeof InvestmentIdeasRoute
+  '/watchlists': typeof WatchlistsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/investment-ideas': typeof InvestmentIdeasRoute
+  '/watchlists': typeof WatchlistsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/investment-ideas'
+  fullPaths: '/' | '/investment-ideas' | '/watchlists'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/investment-ideas'
-  id: '__root__' | '/' | '/investment-ideas'
+  to: '/' | '/investment-ideas' | '/watchlists'
+  id: '__root__' | '/' | '/investment-ideas' | '/watchlists'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   InvestmentIdeasRoute: typeof InvestmentIdeasRoute
+  WatchlistsRoute: typeof WatchlistsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +75,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InvestmentIdeasRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/watchlists': {
+      id: '/watchlists'
+      path: '/watchlists'
+      fullPath: '/watchlists'
+      preLoaderRoute: typeof WatchlistsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   InvestmentIdeasRoute: InvestmentIdeasRoute,
+  WatchlistsRoute: WatchlistsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
