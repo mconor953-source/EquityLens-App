@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as InvestmentIdeasRouteImport } from './routes/investment-ideas'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as WatchlistsRouteImport } from './routes/watchlists'
 
 const IndexRoute = IndexRouteImport.update({
@@ -23,6 +24,11 @@ const InvestmentIdeasRoute = InvestmentIdeasRouteImport.update({
   path: '/investment-ideas',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WatchlistsRoute = WatchlistsRouteImport.update({
   id: '/watchlists',
   path: '/watchlists',
@@ -32,30 +38,34 @@ const WatchlistsRoute = WatchlistsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/investment-ideas': typeof InvestmentIdeasRoute
+  '/settings': typeof SettingsRoute
   '/watchlists': typeof WatchlistsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/investment-ideas': typeof InvestmentIdeasRoute
+  '/settings': typeof SettingsRoute
   '/watchlists': typeof WatchlistsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/investment-ideas': typeof InvestmentIdeasRoute
+  '/settings': typeof SettingsRoute
   '/watchlists': typeof WatchlistsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/investment-ideas' | '/watchlists'
+  fullPaths: '/' | '/investment-ideas' | '/settings' | '/watchlists'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/investment-ideas' | '/watchlists'
-  id: '__root__' | '/' | '/investment-ideas' | '/watchlists'
+  to: '/' | '/investment-ideas' | '/settings' | '/watchlists'
+  id: '__root__' | '/' | '/investment-ideas' | '/settings' | '/watchlists'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   InvestmentIdeasRoute: typeof InvestmentIdeasRoute
+  SettingsRoute: typeof SettingsRoute
   WatchlistsRoute: typeof WatchlistsRoute
 }
 
@@ -75,6 +85,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InvestmentIdeasRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/watchlists': {
       id: '/watchlists'
       path: '/watchlists'
@@ -88,6 +105,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   InvestmentIdeasRoute: InvestmentIdeasRoute,
+  SettingsRoute: SettingsRoute,
   WatchlistsRoute: WatchlistsRoute,
 }
 export const routeTree = rootRouteImport
