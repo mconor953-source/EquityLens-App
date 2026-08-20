@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import type { QuoteRow } from "@/data/types";
+import type { Tone } from "@/lib/format";
 import { changeTone, fmtNum, fmtPct, toneText } from "@/lib/format";
 
 export function MarketTable({ rows, className }: { rows: QuoteRow[]; className?: string }) {
@@ -37,7 +38,7 @@ export function MarketTable({ rows, className }: { rows: QuoteRow[]; className?:
   );
 }
 
-function Spark({ tone, magnitude }: { tone: "pos" | "neg" | "neutral"; magnitude: number }) {
+function Spark({ tone, magnitude }: { tone: Tone; magnitude: number }) {
   const width = 12 + magnitude * 46;
   return (
     <span className="inline-flex h-1.5 w-[58px] items-center justify-end overflow-hidden rounded-[2px] bg-secondary/70">
@@ -45,7 +46,7 @@ function Spark({ tone, magnitude }: { tone: "pos" | "neg" | "neutral"; magnitude
         className={cn("h-1.5 rounded-[2px] transition-all duration-150", {
           "bg-pos": tone === "pos",
           "bg-neg": tone === "neg",
-          "bg-steel-light": tone === "neutral",
+          "bg-steel-light": tone !== "pos" && tone !== "neg",
         })}
         style={{ width: `${width}%` }}
       />
