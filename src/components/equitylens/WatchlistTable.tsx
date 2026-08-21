@@ -19,7 +19,7 @@ export function WatchlistTable({ rows, className }: { rows: WatchlistRow[]; clas
       </thead>
       <tbody>
         {rows.map((r) => (
-          <tr key={r.ticker} className="row-hover border-b border-border/70 last:border-b-0">
+          <tr key={r.ticker} className="row-hover border-b border-border/60 last:border-b-0">
             <td className="px-3.5 py-2">
               <Link to="/market-research" className="group flex min-w-0 flex-col">
                 <span className="num text-[13px] font-semibold text-foreground group-hover:text-brand">{r.ticker}</span>

@@ -113,7 +113,7 @@ function MarketResearchPage() {
                       onClick={() => setMode(m)}
                       className={cn(
                         "px-2 py-1 text-[11px] font-medium capitalize transition-colors duration-150",
-                        mode === m ? "bg-charcoal text-white" : "bg-card text-steel hover:bg-secondary/60",
+                        mode === m ? "bg-charcoal text-white" : "bg-card text-steel hover:bg-surface-active",
                       )}
                     >
                       {m}
@@ -153,7 +153,7 @@ function MarketResearchPage() {
               </thead>
               <tbody>
                 {technical.indicators.map((i) => (
-                  <tr key={i.name} className="row-hover border-b border-border/70 last:border-b-0">
+                  <tr key={i.name} className="row-hover border-b border-border/60 last:border-b-0">
                     <td className="px-3.5 py-2 font-medium text-foreground">{i.name}</td>
                     <td className="num px-3.5 py-2 text-right text-steel">{i.value}</td>
                     <td className="px-3.5 py-2">
