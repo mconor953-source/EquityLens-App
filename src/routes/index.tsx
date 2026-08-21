@@ -61,7 +61,7 @@ function Dashboard() {
 
       <MetricStrip metrics={dashboardMetrics} />
 
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,65fr)_minmax(0,35fr)]">
+      <div className="grid items-start gap-4 lg:grid-cols-[minmax(0,65fr)_minmax(0,35fr)]">
         <Panel>
           <PanelHeader
             title="Market Overview"
