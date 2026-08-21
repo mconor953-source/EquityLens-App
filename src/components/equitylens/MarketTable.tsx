@@ -18,7 +18,7 @@ export function MarketTable({ rows, className }: { rows: QuoteRow[]; className?:
         {rows.map((r) => {
           const tone = changeTone(r.changePct);
           return (
-            <tr key={r.ticker} className="row-hover border-b border-border/70 last:border-b-0">
+            <tr key={r.ticker} className="row-hover border-b border-border/60 last:border-b-0">
               <td className="px-3.5 py-2">
                 <div className="flex min-w-0 items-baseline gap-2">
                   <span className="truncate font-medium text-foreground">{r.name}</span>

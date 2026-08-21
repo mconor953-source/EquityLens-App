@@ -271,7 +271,7 @@ export function TimeframeSelector<T extends string>({
           onClick={() => onChange(o)}
           className={cn(
             "num border-r border-border-strong px-2.5 py-1 text-[11px] font-medium transition-colors duration-150 last:border-r-0",
-            value === o ? "bg-charcoal text-white" : "bg-card text-steel hover:bg-secondary/60",
+            value === o ? "bg-charcoal text-white" : "bg-card text-steel hover:bg-surface-active",
           )}
         >
           {o}

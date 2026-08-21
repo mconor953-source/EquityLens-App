@@ -8,7 +8,7 @@ export function TopBar({ onOpenNav }: { onOpenNav: () => void }) {
         type="button"
         onClick={onOpenNav}
         aria-label="Open navigation"
-        className="rounded-[3px] border border-border-strong p-1 text-steel transition-colors duration-150 hover:bg-secondary/60 lg:hidden"
+        className="rounded-[3px] border border-border-strong p-1 text-steel transition-colors duration-150 hover:bg-surface-active lg:hidden"
       >
         <Menu className="size-4" strokeWidth={1.7} />
       </button>
@@ -26,7 +26,7 @@ export function TopBar({ onOpenNav }: { onOpenNav: () => void }) {
 
       <button
         type="button"
-        className="flex shrink-0 items-center gap-2 rounded-[3px] border border-border-strong px-2 py-1 text-[12px] text-steel transition-colors duration-150 hover:bg-secondary/60"
+        className="flex shrink-0 items-center gap-2 rounded-[3px] border border-border-strong px-2 py-1 text-[12px] text-steel transition-colors duration-150 hover:bg-surface-active"
       >
         <Search className="size-3.5" strokeWidth={1.7} />
         <span className="hidden sm:inline">Search</span>

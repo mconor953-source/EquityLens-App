@@ -74,7 +74,7 @@ function Dashboard() {
                     onClick={() => setTab(t)}
                     className={cn(
                       "border-r border-border-strong px-2.5 py-1 text-[11px] font-medium transition-colors duration-150 last:border-r-0",
-                      tab === t ? "bg-charcoal text-white" : "bg-card text-steel hover:bg-secondary/60",
+                      tab === t ? "bg-charcoal text-white" : "bg-card text-steel hover:bg-surface-active",
                     )}
                   >
                     {t}
