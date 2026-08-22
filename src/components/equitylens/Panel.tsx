@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 export function Panel({ className, children }: { className?: string; children: ReactNode }) {
   return (
-    <section className={cn("flex flex-col overflow-hidden rounded-[4px] border border-border bg-card", className)}>
+    <section className={cn("flex flex-col overflow-hidden rounded-[4px] border border-border-structure bg-card", className)}>
       {children}
     </section>
   );
@@ -23,7 +23,7 @@ export function PanelHeader({
   return (
     <header
       className={cn(
-        "grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 border-b border-border px-3.5 py-2.5",
+        "grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 border-b border-border-structure px-3.5 py-2.5",
         className,
       )}
     >

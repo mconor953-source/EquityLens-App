@@ -103,8 +103,8 @@
   --destructive-foreground: oklch(1 0 0);
   --border: oklch(0.9071 0.0077 241.67);
   --border-strong: oklch(0.854 0.0113 243.68);
-  --border-structure: oklch(0.7952 0.0116 240.5);
-  --surface-active: oklch(0.9375 0.0061 247.4);
+  --border-structure: #B8C0C7;
+  --surface-active: #E8EDF0;
   --input: oklch(0.854 0.0113 243.68);
   --ring: oklch(0.56 0.0639 238.63);
 
