@@ -29,14 +29,28 @@ export function NewsList({ items, className }: { items: NewsItem[]; className?: 
         <li key={n.headline} className="row-hover px-3.5 py-3">
           <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3">
             <div className="min-w-0">
-              <p className="text-[13px] font-medium text-foreground">{n.headline}</p>
-              <p className="mt-1 text-[12px] leading-5 text-steel">{n.why}</p>
+              {n.url ? (
+                <a
+                  href={n.url}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="text-[13px] font-medium text-foreground hover:text-brand"
+                >
+                  {n.headline}
+                </a>
+              ) : (
+                <p className="text-[13px] font-medium text-foreground">{n.headline}</p>
+              )}
+              {n.why ? <p className="mt-1 text-[12px] leading-5 text-steel">{n.why}</p> : null}
               <p className="num mt-1 text-[11px] text-steel-light">
-                {n.source} · {n.when}
+                {[n.source, n.when].filter(Boolean).join(" · ")}
               </p>
             </div>
-            <StatusIndicator label={`${n.importance} impact`} tone={riskTone(n.importance)} variant="chip" />
+            {n.importance ? (
+              <StatusIndicator label={`${n.importance} impact`} tone={riskTone(n.importance)} variant="chip" />
+            ) : null}
           </div>
+
         </li>
       ))}
     </ul>

@@ -1,9 +1,8 @@
 /**
  * Shared domain types for EQUITYLENS.
  *
- * These mirror the shapes the existing FastAPI engine returns, so the mock
- * modules in this folder can later be swapped for REST calls
- * (/api/asset/{ticker}, /api/research/{ticker}, ...) without touching the UI.
+ * These mirror the shapes the FastAPI engine returns (see src/lib/api), so
+ * string unions stay open where the backend is the source of truth.
  */
 
 export type Rating = "Strong Buy" | "Buy" | "Neutral" | "Sell" | "Strong Sell";
@@ -19,7 +18,8 @@ export interface Asset {
   currency: string;
   price: number;
   changePct: number;
-  changeAbs: number;
+  /** Absolute change — only present when the source supplies it. */
+  changeAbs?: number | undefined;
 }
 
 export interface QuoteRow {
@@ -34,24 +34,25 @@ export interface WatchlistRow {
   name: string;
   price: number;
   changePct: number;
-  technical: Rating;
+  technical: string;
   structure: string;
-  eventRisk: RiskLevel;
+  eventRisk: string;
 }
 
 export interface IndicatorSignal {
   name: string;
-  signal: Rating;
+  signal: string;
   note: string;
-  value: string;
+  value?: string | undefined;
 }
 
 export interface TechnicalAnalysis {
-  rating: Rating;
-  score: number; // -100..100
+  rating: string;
+  score: number; // -100..100 signal balance
   counts: { buy: number; neutral: number; sell: number };
-  trend: TrendLabel;
+  trend: string;
   indicators: IndicatorSignal[];
+  rsi?: number | undefined;
 }
 
 export interface HealthCategory {
@@ -74,8 +75,9 @@ export interface NewsItem {
   headline: string;
   source: string;
   when: string;
-  importance: RiskLevel;
-  why: string;
+  importance?: string | undefined;
+  why?: string | undefined;
+  url?: string | undefined;
 }
 
 export interface EventItem {
@@ -83,7 +85,7 @@ export interface EventItem {
   detail: string;
   when: string;
   date: string;
-  importance: RiskLevel;
+  importance: string;
 }
 
 export interface Candle {
@@ -97,14 +99,20 @@ export interface Candle {
 export interface StructurePoint {
   t: string;
   price: number;
-  kind: "HH" | "HL" | "LH" | "LL";
+  kind: string;
   major: boolean;
 }
 
 export interface TimeframeRead {
-  tf: "4H" | "1H" | "15M" | "5M";
-  bias: StructureBias;
+  tf: string;
+  bias: string;
   note: string;
+}
+
+export interface StructureLevel {
+  timeframe: string;
+  price: number;
+  label: string;
 }
 
 export interface MarketStructure {
@@ -112,7 +120,9 @@ export interface MarketStructure {
   timeframes: TimeframeRead[];
   sellerLevel: number;
   buyerLevel: number;
-  phase: { breakState: ConfirmState; correction: ConfirmState; continuation: ConfirmState };
+  sellerLevels?: StructureLevel[] | undefined;
+  buyerLevels?: StructureLevel[] | undefined;
+  phase: { breakState: string; correction: string; continuation: string };
   outlook: string[];
   details: { label: string; value: string }[];
   eventRisk: string;

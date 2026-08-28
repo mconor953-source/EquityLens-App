@@ -1,11 +1,10 @@
 import { cn } from "@/lib/utils";
-import type { Rating } from "@/data/types";
 import { ratingTone, toneText } from "@/lib/format";
 
-const BANDS: Rating[] = ["Strong Sell", "Sell", "Neutral", "Buy", "Strong Buy"];
+const BANDS: string[] = ["Strong Sell", "Sell", "Neutral", "Buy", "Strong Buy"];
 
 /** Clean sentiment meter: -100 (Strong Sell) to +100 (Strong Buy). */
-export function SignalMeter({ rating, score, className }: { rating: Rating; score: number; className?: string }) {
+export function SignalMeter({ rating, score, className }: { rating: string; score: number; className?: string }) {
   const pos = ((score + 100) / 200) * 100;
   return (
     <div className={cn("w-full", className)}>
