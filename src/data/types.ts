@@ -19,7 +19,7 @@ export interface Asset {
   price: number;
   changePct: number;
   /** Absolute change — only present when the source supplies it. */
-  changeAbs?: number;
+  changeAbs?: number | undefined;
 }
 
 export interface QuoteRow {
@@ -43,7 +43,7 @@ export interface IndicatorSignal {
   name: string;
   signal: string;
   note: string;
-  value?: string;
+  value?: string | undefined;
 }
 
 export interface TechnicalAnalysis {
@@ -52,7 +52,7 @@ export interface TechnicalAnalysis {
   counts: { buy: number; neutral: number; sell: number };
   trend: string;
   indicators: IndicatorSignal[];
-  rsi?: number;
+  rsi?: number | undefined;
 }
 
 export interface HealthCategory {
@@ -75,9 +75,9 @@ export interface NewsItem {
   headline: string;
   source: string;
   when: string;
-  importance?: string;
-  why?: string;
-  url?: string;
+  importance?: string | undefined;
+  why?: string | undefined;
+  url?: string | undefined;
 }
 
 export interface EventItem {
@@ -120,8 +120,8 @@ export interface MarketStructure {
   timeframes: TimeframeRead[];
   sellerLevel: number;
   buyerLevel: number;
-  sellerLevels?: StructureLevel[];
-  buyerLevels?: StructureLevel[];
+  sellerLevels?: StructureLevel[] | undefined;
+  buyerLevels?: StructureLevel[] | undefined;
   phase: { breakState: string; correction: string; continuation: string };
   outlook: string[];
   details: { label: string; value: string }[];
