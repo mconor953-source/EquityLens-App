@@ -46,9 +46,10 @@ export function AssetHeader({
             {fmtNum(asset.price, 2)}
           </span>
           <span className={cn("num text-[13px] font-medium", toneText(tone))}>
-            {asset.changeAbs > 0 ? "+" : ""}
-            {fmtNum(asset.changeAbs, 2)} ({fmtPct(asset.changePct)})
+            {asset.changeAbs !== undefined ? `${asset.changeAbs > 0 ? "+" : ""}${fmtNum(asset.changeAbs, 2)} ` : ""}
+            {asset.changeAbs !== undefined ? `(${fmtPct(asset.changePct)})` : fmtPct(asset.changePct)}
           </span>
+
         </div>
 
         {status ? (
