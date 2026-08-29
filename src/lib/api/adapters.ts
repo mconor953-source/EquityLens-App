@@ -14,6 +14,7 @@ import type {
   StructurePoint,
   TechnicalAnalysis,
   TimeframeRead,
+  WatchlistRow,
 } from "@/data/types";
 import type {
   ApiAsset,
@@ -213,4 +214,18 @@ function formatWhen(iso: string) {
     minute: "2-digit",
     timeZone: "UTC",
   });
+}
+
+/* --------------------------------------------------------------- watchlist */
+
+export function toWatchlistRow(raw: ApiAsset): WatchlistRow {
+  return {
+    ticker: raw.symbol,
+    name: raw.name?.trim() || raw.symbol,
+    price: raw.price ?? 0,
+    changePct: raw.daily_change_pct ?? 0,
+    technical: raw.technical?.signal ?? raw.technical?.rating ?? "—",
+    structure: raw.market_structure?.status ?? "—",
+    eventRisk: raw.event_risk?.label ?? "—",
+  };
 }

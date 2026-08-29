@@ -10,8 +10,8 @@ export function ResearchSnapshot({
   className,
 }: {
   technical: TechnicalAnalysis;
-  health: FinancialHealth;
-  eventRisk: "Low" | "Moderate" | "High";
+  health: FinancialHealth | null;
+  eventRisk: string;
   className?: string;
 }) {
   return (
@@ -29,12 +29,16 @@ export function ResearchSnapshot({
       </SnapRow>
 
       <SnapRow label="Financial health">
-        <span className="flex items-baseline gap-2">
-          <span className="num text-[14px] font-semibold text-foreground">
-            {health.score} / {health.max}
+        {health ? (
+          <span className="flex items-baseline gap-2">
+            <span className="num text-[14px] font-semibold text-foreground">
+              {health.score} / {health.max}
+            </span>
+            <span className="text-[12px] text-steel">{health.label}</span>
           </span>
-          <span className="text-[12px] text-steel">{health.label}</span>
-        </span>
+        ) : (
+          <span className="text-[12px] text-steel-light">Not supplied by engine</span>
+        )}
       </SnapRow>
 
       <SnapRow label="Trend">
