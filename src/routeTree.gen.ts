@@ -15,6 +15,7 @@ import { Route as MarketResearchRouteImport } from './routes/market-research'
 import { Route as MarketStructureRouteImport } from './routes/market-structure'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as WatchlistsRouteImport } from './routes/watchlists'
+import { Route as ApiPublicEngineSplatRouteImport } from './routes/api/public/engine/$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,6 +47,11 @@ const WatchlistsRoute = WatchlistsRouteImport.update({
   path: '/watchlists',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicEngineSplatRoute = ApiPublicEngineSplatRouteImport.update({
+  id: '/api/public/engine/$',
+  path: '/api/public/engine/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -54,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/market-structure': typeof MarketStructureRoute
   '/settings': typeof SettingsRoute
   '/watchlists': typeof WatchlistsRoute
+  '/api/public/engine/$': typeof ApiPublicEngineSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +69,7 @@ export interface FileRoutesByTo {
   '/market-structure': typeof MarketStructureRoute
   '/settings': typeof SettingsRoute
   '/watchlists': typeof WatchlistsRoute
+  '/api/public/engine/$': typeof ApiPublicEngineSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,6 +79,7 @@ export interface FileRoutesById {
   '/market-structure': typeof MarketStructureRoute
   '/settings': typeof SettingsRoute
   '/watchlists': typeof WatchlistsRoute
+  '/api/public/engine/$': typeof ApiPublicEngineSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -81,6 +90,7 @@ export interface FileRouteTypes {
     | '/market-structure'
     | '/settings'
     | '/watchlists'
+    | '/api/public/engine/$'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -89,6 +99,7 @@ export interface FileRouteTypes {
     | '/market-structure'
     | '/settings'
     | '/watchlists'
+    | '/api/public/engine/$'
   id:
     | '__root__'
     | '/'
@@ -97,6 +108,7 @@ export interface FileRouteTypes {
     | '/market-structure'
     | '/settings'
     | '/watchlists'
+    | '/api/public/engine/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -106,6 +118,7 @@ export interface RootRouteChildren {
   MarketStructureRoute: typeof MarketStructureRoute
   SettingsRoute: typeof SettingsRoute
   WatchlistsRoute: typeof WatchlistsRoute
+  ApiPublicEngineSplatRoute: typeof ApiPublicEngineSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -152,6 +165,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WatchlistsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/engine/$': {
+      id: '/api/public/engine/$'
+      path: '/api/public/engine/$'
+      fullPath: '/api/public/engine/$'
+      preLoaderRoute: typeof ApiPublicEngineSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -162,6 +182,7 @@ const rootRouteChildren: RootRouteChildren = {
   MarketStructureRoute: MarketStructureRoute,
   SettingsRoute: SettingsRoute,
   WatchlistsRoute: WatchlistsRoute,
+  ApiPublicEngineSplatRoute: ApiPublicEngineSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
