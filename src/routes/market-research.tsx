@@ -165,7 +165,7 @@ function MarketResearchPage() {
         <Panel>
           <PanelHeader
             title="Technical Analysis"
-            meta={technical ? `${technical.indicators.length} indicators` : undefined}
+            meta={technical ? `${technical.indicators.length} indicators` : ""}
           />
           {research.isPending ? (
             <SkeletonRows rows={6} />

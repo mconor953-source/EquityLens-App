@@ -88,7 +88,7 @@ function MarketStructurePage() {
       ) : asset.data ? (
         <AssetHeader
           asset={toAsset(asset.data)}
-          status={s?.status ?? asset.data.market_structure?.status ?? undefined}
+          status={s?.status ?? asset.data.market_structure?.status ?? ""}
           statusTone="warn"
           statusLabel="Structure"
         />
@@ -177,7 +177,7 @@ function MarketStructurePage() {
               </Panel>
 
               <Panel>
-                <PanelHeader title="Structure Outlook" meta={structure.data?.quality ?? undefined} />
+                <PanelHeader title="Structure Outlook" meta={structure.data?.quality ?? ""} />
                 {s.outlook.length ? (
                   <PanelBody>
                     <ul className="space-y-2">
