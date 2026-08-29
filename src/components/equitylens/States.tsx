@@ -22,13 +22,13 @@ export function SkeletonRows({ rows = 5, className }: { rows?: number; className
 export function SkeletonBlock({ height = 200 }: { height?: number }) {
   return (
     <div className="px-3.5 py-3">
-      <Skeleton className="w-full" style={undefined} />
       <div className="w-full" style={{ height }}>
         <Skeleton className="h-full w-full" />
       </div>
     </div>
   );
 }
+
 
 export function StateMessage({
   title,
