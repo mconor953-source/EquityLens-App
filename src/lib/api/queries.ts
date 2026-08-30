@@ -38,6 +38,24 @@ export const eventsQuery = (ticker: string) =>
     ...base,
   });
 
+export const technicalQuery = (ticker: string) =>
+  queryOptions({
+    queryKey: ["technical", ticker],
+    queryFn: () => api.get<ApiTechnical>(`/api/technical/${encodeTicker(ticker)}`),
+    enabled: Boolean(ticker),
+    ...base,
+  });
+
+/** 404 = the engine has no fundamentals for this asset class; do not retry. */
+export const fundamentalsQuery = (ticker: string) =>
+  queryOptions({
+    queryKey: ["fundamentals", ticker],
+    queryFn: () => api.get<Record<string, unknown>>(`/api/fundamentals/${encodeTicker(ticker)}`),
+    enabled: Boolean(ticker),
+    staleTime: 60_000,
+    retry: false,
+  });
+
 export const watchlistQuery = () =>
   queryOptions({ queryKey: ["watchlist"], queryFn: () => api.get<ApiWatchlist>("/api/watchlist"), ...base });
 
