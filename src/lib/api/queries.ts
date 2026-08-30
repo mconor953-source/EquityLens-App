@@ -1,6 +1,14 @@
 import { queryOptions } from "@tanstack/react-query";
 import { api, encodeTicker } from "./client";
-import type { ApiAsset, ApiEvents, ApiInvestmentIdea, ApiMarketStructure, ApiResearch, ApiWatchlist } from "./types";
+import type {
+  ApiAsset,
+  ApiEvents,
+  ApiInvestmentIdea,
+  ApiMarketStructure,
+  ApiResearch,
+  ApiTechnical,
+  ApiWatchlist,
+} from "./types";
 
 const base = { staleTime: 60_000, retry: 1 } as const;
 
@@ -36,6 +44,24 @@ export const eventsQuery = (ticker: string) =>
     queryFn: () => api.get<ApiEvents>(`/api/events/${encodeTicker(ticker)}`),
     enabled: Boolean(ticker),
     ...base,
+  });
+
+export const technicalQuery = (ticker: string) =>
+  queryOptions({
+    queryKey: ["technical", ticker],
+    queryFn: () => api.get<ApiTechnical>(`/api/technical/${encodeTicker(ticker)}`),
+    enabled: Boolean(ticker),
+    ...base,
+  });
+
+/** 404 = the engine has no fundamentals for this asset class; do not retry. */
+export const fundamentalsQuery = (ticker: string) =>
+  queryOptions({
+    queryKey: ["fundamentals", ticker],
+    queryFn: () => api.get<Record<string, unknown>>(`/api/fundamentals/${encodeTicker(ticker)}`),
+    enabled: Boolean(ticker),
+    staleTime: 60_000,
+    retry: false,
   });
 
 export const watchlistQuery = () =>
