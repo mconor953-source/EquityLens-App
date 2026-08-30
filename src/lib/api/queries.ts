@@ -1,6 +1,14 @@
 import { queryOptions } from "@tanstack/react-query";
 import { api, encodeTicker } from "./client";
-import type { ApiAsset, ApiEvents, ApiInvestmentIdea, ApiMarketStructure, ApiResearch, ApiWatchlist } from "./types";
+import type {
+  ApiAsset,
+  ApiEvents,
+  ApiInvestmentIdea,
+  ApiMarketStructure,
+  ApiResearch,
+  ApiTechnical,
+  ApiWatchlist,
+} from "./types";
 
 const base = { staleTime: 60_000, retry: 1 } as const;
 
