@@ -51,7 +51,9 @@ export function ratingTone(rating: string): Tone {
 }
 
 export function riskTone(level: string): Tone {
-  if (level === "High") return "neg";
-  if (level === "Moderate") return "warn";
-  return "pos";
+  const l = level.toLowerCase();
+  if (l === "high") return "neg";
+  if (l === "moderate" || l === "medium") return "warn";
+  if (l === "low") return "pos";
+  return "neutral";
 }

@@ -6,6 +6,7 @@
 import type {
   Asset,
   Candle,
+  EventItem,
   FinancialHealth,
   HealthCategory,
   IndicatorSignal,
@@ -228,4 +229,54 @@ export function toWatchlistRow(raw: ApiAsset): WatchlistRow {
     structure: raw.market_structure?.status ?? "—",
     eventRisk: raw.event_risk?.label ?? "—",
   };
+}
+
+/* ------------------------------------------------------------------ events */
+
+interface RawEconomicEvent {
+  title?: string | null;
+  currency?: string | null;
+  impact?: string | null;
+  time?: string | null;
+  forecast?: string | null;
+  previous?: string | null;
+  time_until?: string | null;
+  relevance?: string | null;
+}
+
+/** Economic calendar entries exactly as the engine supplies them. */
+export function toEventItems(raw: unknown, limit = 5): EventItem[] {
+  const list = Array.isArray(raw) ? (raw as RawEconomicEvent[]) : [];
+  return list.slice(0, limit).map((e) => ({
+    label: e.title ?? "—",
+    detail: [
+      e.currency ? `${e.currency}` : null,
+      e.forecast ? `Forecast ${e.forecast}` : null,
+      e.previous ? `Previous ${e.previous}` : null,
+    ]
+      .filter(Boolean)
+      .join(" · "),
+    when: e.time_until ? `in ${e.time_until}` : "",
+    date: e.time ? formatEventDate(e.time) : "—",
+    importance: e.impact ?? "—",
+  }));
+}
+
+function formatEventDate(iso: string) {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return iso;
+  return d.toLocaleString("en-GB", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" });
+}
+
+/* ------------------------------------------------------------ fundamentals */
+
+/** Flattens the engine's fundamentals payload into label/value rows. No derived maths. */
+export function toFundamentalRows(raw: Record<string, unknown> | null | undefined) {
+  if (!raw) return [];
+  return Object.entries(raw)
+    .filter(([, v]) => v !== null && v !== undefined && typeof v !== "object")
+    .map(([k, v]) => ({
+      label: k.replace(/_/g, " ").replace(/^(\w)/, (m) => m.toUpperCase()),
+      value: typeof v === "number" ? v.toLocaleString("en-GB", { maximumFractionDigits: 2 }) : String(v),
+    }));
 }
