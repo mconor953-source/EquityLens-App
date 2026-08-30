@@ -5,8 +5,8 @@ import { toneText } from "@/lib/format";
 export interface Metric {
   label: string;
   value: string;
-  note?: string;
-  tone?: Tone;
+  note?: string | undefined;
+  tone?: Tone | undefined;
 }
 
 /** One unified compact strip — not four separate cards. */
