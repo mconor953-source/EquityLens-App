@@ -4,7 +4,17 @@ import type { WatchlistRow } from "@/data/types";
 import { changeTone, fmtNum, fmtPct, ratingTone, riskTone, toneText } from "@/lib/format";
 import { StatusIndicator } from "./StatusIndicator";
 
-export function WatchlistTable({ rows, className }: { rows: WatchlistRow[]; className?: string }) {
+export function WatchlistTable({
+  rows,
+  className,
+  onRemove,
+  removingTicker,
+}: {
+  rows: WatchlistRow[];
+  className?: string;
+  onRemove?: (ticker: string) => void;
+  removingTicker?: string | null;
+}) {
   return (
     <table className={cn("w-full border-collapse text-[13px]", className)}>
       <thead>
@@ -15,6 +25,7 @@ export function WatchlistTable({ rows, className }: { rows: WatchlistRow[]; clas
           <th className="eyebrow px-3.5 py-2 font-semibold">Technical</th>
           <th className="eyebrow px-3.5 py-2 font-semibold">Structure</th>
           <th className="eyebrow px-3.5 py-2 font-semibold">Event Risk</th>
+          {onRemove ? <th className="eyebrow px-3.5 py-2 text-right font-semibold">&nbsp;</th> : null}
         </tr>
       </thead>
       <tbody>
@@ -37,6 +48,19 @@ export function WatchlistTable({ rows, className }: { rows: WatchlistRow[]; clas
             <td className="px-3.5 py-2">
               <StatusIndicator label={r.eventRisk} tone={riskTone(r.eventRisk)} variant="chip" />
             </td>
+            {onRemove ? (
+              <td className="px-3.5 py-2 text-right">
+                <button
+                  type="button"
+                  onClick={() => onRemove(r.ticker)}
+                  disabled={removingTicker === r.ticker}
+                  aria-label={`Remove ${r.ticker}`}
+                  className="rounded-[3px] border border-border-strong bg-card px-1.5 py-0.5 text-[11px] text-steel transition-colors duration-150 hover:bg-surface-active disabled:opacity-50"
+                >
+                  {removingTicker === r.ticker ? "…" : "Remove"}
+                </button>
+              </td>
+            ) : null}
           </tr>
         ))}
       </tbody>
