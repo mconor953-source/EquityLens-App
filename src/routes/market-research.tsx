@@ -238,6 +238,39 @@ function MarketResearchPage() {
           />
         )}
       </Panel>
+
+      <Panel>
+        <PanelHeader
+          title="Fundamentals"
+          meta={fundamentalRows.length ? `${fundamentalRows.length} engine fields` : "Engine output"}
+        />
+        {fundamentals.isPending ? (
+          <SkeletonRows rows={4} />
+        ) : fundamentalRows.length ? (
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[420px] border-collapse text-[13px]">
+              <tbody>
+                {fundamentalRows.map((r) => (
+                  <tr key={r.label} className="row-hover border-b border-border/60 last:border-b-0">
+                    <td className="px-3.5 py-2 text-steel">{r.label}</td>
+                    <td className="num px-3.5 py-2 text-right font-medium text-foreground">{r.value}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <StateMessage
+            title="Fundamentals not available"
+            detail={
+              fundamentals.isError
+                ? (fundamentals.error as Error).message
+                : `The engine returned no fundamentals for ${ticker}. No substitute values are shown.`
+            }
+          />
+        )}
+      </Panel>
     </div>
   );
 }
+
