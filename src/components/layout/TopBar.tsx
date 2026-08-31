@@ -1,7 +1,14 @@
+import { useEffect, useState } from "react";
 import { Menu, Search } from "lucide-react";
-import { lastUpdated } from "@/data/mock";
 
 export function TopBar({ onOpenNav }: { onOpenNav: () => void }) {
+  const [loaded, setLoaded] = useState<string | null>(null);
+  useEffect(() => {
+    setLoaded(
+      new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "UTC" }) + " UTC",
+    );
+  }, []);
+
   return (
     <div className="sticky top-0 z-20 grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 border-b border-border bg-card/95 px-4 py-2 backdrop-blur-[2px]">
       <button
@@ -19,9 +26,9 @@ export function TopBar({ onOpenNav }: { onOpenNav: () => void }) {
           Markets open
         </span>
         <span className="num hidden shrink-0 text-[12px] text-steel-light sm:inline">
-          Last updated {lastUpdated}
+          Session started {loaded ?? "—"}
         </span>
-        <span className="hidden truncate text-[12px] text-warn md:inline">Mock data — not live market data</span>
+        <span className="hidden truncate text-[12px] text-steel-light md:inline">Live research engine · delayed quotes</span>
       </div>
 
       <button

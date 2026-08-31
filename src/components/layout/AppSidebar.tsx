@@ -83,7 +83,7 @@ export function AppSidebar({ onNavigate, onClose }: { onNavigate?: () => void; o
       </nav>
 
       <div className="border-t border-white/8 px-4 py-3">
-        <div className="text-[10px] leading-4 tracking-wide text-steel uppercase">Mock data build</div>
+        <div className="text-[10px] leading-4 tracking-wide text-steel uppercase">Live engine build</div>
         <div className="num mt-0.5 text-[11px] text-steel-light">v0.1 · research preview</div>
       </div>
     </div>

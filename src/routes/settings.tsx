@@ -18,8 +18,8 @@ const groups = [
   {
     title: "Data",
     rows: [
-      { label: "Data source", value: "Mock dataset (local)" },
-      { label: "Backend endpoint", value: "Not connected" },
+      { label: "Data source", value: "EquityLens research engine" },
+      { label: "Backend endpoint", value: "/api/public/engine/*" },
       { label: "Refresh interval", value: "Manual" },
     ],
   },
@@ -36,7 +36,7 @@ const groups = [
     rows: [
       { label: "Default timeframe", value: "6M" },
       { label: "Structure timeframes", value: "4H / 1H / 15M / 5M" },
-      { label: "Chart style", value: "Candlestick" },
+      { label: "Chart style", value: "Swing structure line" },
     ],
   },
 ];
@@ -44,7 +44,7 @@ const groups = [
 function SettingsPage() {
   return (
     <div className="space-y-4">
-      <PageHeader title="Settings" subtitle="Preferences will persist once the backend is connected." />
+      <PageHeader title="Settings" subtitle="Current data source and display defaults." />
       <div className="grid gap-4 lg:grid-cols-3">
         {groups.map((g) => (
           <Panel key={g.title}>
