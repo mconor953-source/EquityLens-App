@@ -12,7 +12,7 @@ import { NewsList } from "@/components/equitylens/EventList";
 import { StatusIndicator } from "@/components/equitylens/StatusIndicator";
 import { TickerSearch } from "@/components/equitylens/TickerSearch";
 import { RetryButton, SkeletonBlock, SkeletonRows, StateMessage } from "@/components/equitylens/States";
-import { eventsQuery, researchQuery, structureQuery } from "@/lib/api/queries";
+import { eventsQuery, fundamentalsQuery, researchQuery, structureQuery } from "@/lib/api/queries";
 import {
   STRUCTURE_TFS,
   TF_LABEL,
@@ -20,6 +20,7 @@ import {
   swingsToSeries,
   toAsset,
   toFinancialHealth,
+  toFundamentalRows,
   toNews,
   toTechnical,
   type StructureTf,
@@ -54,6 +55,7 @@ function MarketResearchPage() {
   const research = useQuery(researchQuery(ticker));
   const events = useQuery(eventsQuery(ticker));
   const structure = useQuery(structureQuery(ticker));
+  const fundamentals = useQuery(fundamentalsQuery(ticker));
 
   const raw = research.data;
   const asset = raw ? toAsset(raw) : null;
@@ -61,6 +63,7 @@ function MarketResearchPage() {
   const health = toFinancialHealth(raw?.financial_health);
   const news = toNews(events.data);
   const eventRisk = raw?.event_risk?.label ?? "—";
+  const fundamentalRows = toFundamentalRows(fundamentals.data);
 
   const swings = structure.data?.timeframes?.[tf]?.swings ?? null;
   const series = swingsToSeries(swings);
