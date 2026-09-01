@@ -62,9 +62,13 @@ function ListPanel({ name, tickers }: { name: string; tickers: string[] }) {
   const [error, setError] = useState<string | null>(null);
 
   const results = useQueries({ queries: tickers.map((t) => assetQuery(t)) });
-  const assets = results.map((r) => r.data).filter((a): a is ApiAsset => Boolean(a));
-  const pending = tickers.length > 0 && results.some((r) => r.isPending);
-  const rows = assets.map(toWatchlistRow);
+  const resolved = tickers
+    .map((ticker, i) => ({ ticker, result: results[i] }))
+    .filter((x) => Boolean(x.result?.data));
+  const loadingTickers = tickers.filter((_, i) => results[i]?.isPending);
+  const failedTickers = tickers.filter((_, i) => results[i]?.isError);
+  const rows = resolved.map((x) => toWatchlistRow(x.result!.data as ApiAsset));
+
 
   const invalidate = () => void qc.invalidateQueries({ queryKey: ["watchlist"] });
 
@@ -120,9 +124,7 @@ function ListPanel({ name, tickers }: { name: string; tickers: string[] }) {
         }
       />
       {error ? <p className="border-b border-border px-3.5 py-2 text-[12px] text-neg">{error}</p> : null}
-      {pending ? (
-        <SkeletonRows rows={Math.min(tickers.length || 3, 6)} />
-      ) : rows.length ? (
+      {rows.length ? (
         <div className="overflow-x-auto">
           <WatchlistTable
             rows={rows}
@@ -131,9 +133,30 @@ function ListPanel({ name, tickers }: { name: string; tickers: string[] }) {
             removingTicker={remove.isPending ? (remove.variables ?? null) : null}
           />
         </div>
-      ) : (
+      ) : loadingTickers.length ? (
+        <SkeletonRows rows={Math.min(loadingTickers.length, 6)} />
+      ) : tickers.length ? null : (
         <StateMessage title="Empty list" detail="Add a ticker to start tracking research state." />
       )}
+
+      {rows.length && loadingTickers.length ? <SkeletonRows rows={Math.min(loadingTickers.length, 6)} /> : null}
+
+      {failedTickers.length ? (
+        <p className="border-t border-border px-3.5 py-2 text-[11px] text-steel">
+          Unavailable:{" "}
+          <span className="num text-foreground">{failedTickers.join(", ")}</span>
+          {" — the engine did not return data for these assets."}
+        </p>
+      ) : null}
+
+      {!rows.length && !loadingTickers.length && failedTickers.length ? (
+        <StateMessage
+          tone="error"
+          title="No assets available"
+          detail="None of the tickers in this list returned data from the engine."
+        />
+      ) : null}
+
     </Panel>
   );
 }
