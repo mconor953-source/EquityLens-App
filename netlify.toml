@@ -1,0 +1,12 @@
+[build]
+  command = "bun run build"
+  # Nitro's `netlify` preset emits the static client into `dist` and the SSR
+  # handler into `.netlify/functions-internal/` (picked up automatically).
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Optional: point the same-origin engine passthrough at a different upstream.
+# Set EQUITYLENS_API_URL in Netlify UI > Site configuration > Environment variables.
+# Default upstream stays https://equitylens-k86w.onrender.com
