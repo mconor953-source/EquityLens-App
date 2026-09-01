@@ -6,7 +6,12 @@
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
+// Netlify CI sets NETLIFY=true. There we pin Nitro's `netlify` preset so the build
+// emits Netlify functions + static assets; Lovable/Cloudflare builds keep the default.
+const isNetlify = process.env["NETLIFY"] === "true" || !!process.env["NETLIFY_BUILD_BASE"];
+
 export default defineConfig({
+  ...(isNetlify ? { nitro: { preset: "netlify" } } : {}),
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this
